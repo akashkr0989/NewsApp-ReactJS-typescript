@@ -36,3 +36,13 @@
     transform: rotate(360deg);
   }
 }
+
+.error{
+  color: red;
+  padding-top: 5px;
+  align-items: left !important;
+}
+
+.cursor-pointer {
+  cursor: pointer;
+}

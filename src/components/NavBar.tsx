@@ -1,12 +1,21 @@
 import React, { Component } from 'react'
-import { Link } from "react-router-dom";
+import { Route, Link, useNavigate, Navigate } from "react-router-dom";
+import { clearLocalStorage } from '../common/utilityService'
+
+export default function NavBar() {
+
+    const navigate = useNavigate();
 
 
-export default class NavBar extends Component {
+    const logoutHandle = () => {
+        clearLocalStorage();
+        navigate('/login')
+    //    return  <Navigate to={'login'} />
+    }
 
 
-    render() {
-        return (
+    return (
+        <div>
             <div>
                 <nav className="navbar navbar-expand-lg bg-body-tertiary bg-dark">
                     <div className="container-fluid">
@@ -19,9 +28,7 @@ export default class NavBar extends Component {
                                 <li className="nav-item">
                                     <Link className="nav-link" aria-current="page" to="/">Home</Link>
                                 </li>
-                                <li className="nav-item">
-                                    <Link className="nav-link" to="/about">About</Link>
-                                </li>
+
 
                                 <li className="nav-item"><Link to="/business" className="nav-link"> Business </Link></li>
                                 <li className="nav-item"><Link to="/entertainment" className="nav-link"> Entertainment</Link></li>
@@ -30,14 +37,19 @@ export default class NavBar extends Component {
                                 <li className="nav-item"><Link to="/science" className="nav-link"> Science</Link></li>
                                 <li className="nav-item"><Link to="/sports" className="nav-link"> Sports</Link></li>
                                 <li className="nav-item"><Link to="/technology" className="nav-link"> Technology</Link></li>
-
+                                <li className="nav-item">
+                                    <Link className="nav-link" to="/about">About</Link>
+                                </li>
 
                             </ul>
 
                         </div>
+                        <div>
+                            <button type="button" onClick={logoutHandle} className="btn btn-light cursor-pointer">Log Out</button>
+                        </div>
                     </div>
                 </nav>
             </div>
-        )
-    }
+        </div>
+    )
 }
