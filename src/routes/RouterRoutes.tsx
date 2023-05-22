@@ -3,27 +3,58 @@ import NavBar from '../components/NavBar'
 import News from '../components/News'
 import { ROUTES_URL } from '../constants/Routes'
 import About from '../components/About'
-import { BrowserRouter as Router, Route, Routes, Navigate } from "react-router-dom";
+import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import NotFound from '../components/NotFound'
 import Signup from '../components/Signup/index'
 import Login from '../components/Login/index'
 import AuthGuard from '../RouteGuards/AuthGuard'
 import LoginGuard from '../RouteGuards/LoginGuard'
 import FormikLearning from '../components/Login/Learning/FormikLearning'
+import Country from '../components/Countries'
+// import NewNavBar from '../components/NewNavbar'
+import University from '../components/University'
+// import { getLoginToken } from '../common/utilityService'
 
 
-export class RouterRoutes extends Component<any> {
+
+export class RouterRoutes extends Component<any, any> {
 
     pageSize = 4;
 
+    // constructor(props: any) {
+    //     super(props);
+
+    //     this.state = {
+    //         isLoggedIn: false
+    //     };
+    // }
+
+    // componentDidMount(): void {
+    //     if (getLoginToken()) {
+    //         this.setState({ isLoggedIn: true })
+    //     }
+    //     else {
+    //         this.setState({ isLoggedIn: false })
+
+    //     }
+    // }
+
+
     render() {
+        // const { isLoggedIn } = this.state;
+        // console.log(isLoggedIn)
+
         return (
             <Router>
+
+                {/* <NavBar isLoggedIn={isLoggedIn} /> */}
+                <NavBar />
+                {/* <NewNavBar /> */}
                 <Routes>
 
 
                     <Route path='login' element={<Login />} />
-                        <Route path='register' element={<Signup />} />
+                    <Route path='register' element={<Signup />} />
                     <Route element={<LoginGuard />} >
 
 
@@ -31,6 +62,7 @@ export class RouterRoutes extends Component<any> {
 
 
                     <Route element={<AuthGuard />} >
+
 
                         <Route path={ROUTES_URL.ABOUT.url} element={<About />} />
 
@@ -52,10 +84,14 @@ export class RouterRoutes extends Component<any> {
 
                         <Route path='learn-formik' element={<FormikLearning />} />
 
+                        <Route path={ROUTES_URL.COUNTRY.url} element={<Country />} />
+
+                        <Route path={ROUTES_URL.UNIVERSITY.url} element={<University />} />
+
                     </Route>
 
 
-                    {/* <Route path='*' element={<NotFound />} /> */}
+                    <Route path='*' element={<NotFound />} />
 
 
                 </Routes>

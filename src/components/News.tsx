@@ -2,9 +2,13 @@ import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import NewsItem from './NewsItem'
 import SampleNews from '../samplenews.json'
-import Spinner from './Spinner';
+// import Spinner from './Spinner';
 import * as utility from '../common/utilityService'
-import NavBar from './NavBar';
+// import NavBar from './NavBar';
+// import axios from 'axios';
+import Skeleton from '@mui/material/Skeleton';
+// import Avatar from '@mui/material/Avatar';
+
 
 
 interface NewsProps {
@@ -24,6 +28,8 @@ interface NewsState {
 
 
 export default class News extends Component<NewsProps, NewsState> {
+
+    skeleton = new Array(10).fill(0)
 
     static defaultProps = {
         country: 'in',
@@ -324,12 +330,12 @@ export default class News extends Component<NewsProps, NewsState> {
 
 
         // with api call
-        // let data = await fetch(url);
-        // let parsedData = await data.json();
+        let data = await fetch(url);
+        let parsedData = await data.json();
 
         // sample response from json
-        let data = SampleNews;
-        let parsedData = data;
+        // let data = SampleNews;
+        // let parsedData = data;
 
         console.log(parsedData);
         this.setState({ articles: parsedData.articles, totalResults: parsedData.totalResults, loading: false });
@@ -363,22 +369,34 @@ export default class News extends Component<NewsProps, NewsState> {
     }
 
     render() {
+
         return (
             <>
-                <NavBar />
+
                 <div className='container my-3'>
                     <h1 className="text-center" style={{ margin: '35px 0px' }}>NewsMonkey - Top {utility.capitalizeFirstLetter(this.props.category)} Headlines</h1>
-                    {this.state.loading && <Spinner />}
+                    {/* {this.state.loading && <Spinner />} */}
 
                     <div className="row">
 
-                        {!this.state.loading && this.state.articles.map((element: any) => {
-                            return <div className="col-md-3" key={element.url}>
-                                <NewsItem title={element.title} description={element.description} imageUrl={element.urlToImage} newsUrl={element.url}
-                                    author={element.author} date={element.publishedAt} source={element?.source?.name} />
-                            </div>
-                        })}
+                        {this.state.loading ? (
+                            this.skeleton.map((element: any) => {
+                                return <div className="col-md-3">
+                                    <Skeleton variant="rectangular" width="100%">
+                                        <div style={{ paddingTop: '25%' }} />
+                                    </Skeleton>
+                                </div>
+                            })
 
+                        ) : (
+
+                            this.state.articles.map((element: any) => {
+                                return <div className="col-md-3" key={element.url}>
+                                    <NewsItem title={element.title} description={element.description} imageUrl={element.urlToImage} newsUrl={element.url}
+                                        author={element.author} date={element.publishedAt} source={element?.source?.name} />
+                                </div>
+                            })
+                        )}
 
                     </div>
 
@@ -386,6 +404,10 @@ export default class News extends Component<NewsProps, NewsState> {
                         <button disabled={this.state.page <= 1} type="button" onClick={this.handlePrevClick} className="btn btn-dark"> &larr; Previous</button>
                         <button disabled={this.state.page + 1 > Math.ceil(this.state.totalResults / this.props.pageSize)} type="button" onClick={this.handleNextClick} className="btn btn-dark">Next &rarr;</button>
                     </div>
+
+
+
+
 
 
                 </div>

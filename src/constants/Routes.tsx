@@ -26,6 +26,15 @@ export const ROUTES_URL = {
     },
     TECHNOLOGY: {
         url: 'technology'
+    },
+    COUNTRY: {
+        url: 'country-data'
+    },
+    DOGS: {
+        url: 'dogs'
+    },
+    UNIVERSITY: {
+        url: 'universities'
     }
 
 }
