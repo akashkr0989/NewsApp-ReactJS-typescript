@@ -13,6 +13,7 @@ import FormikLearning from '../components/Login/Learning/FormikLearning'
 import Country from '../components/Countries'
 // import NewNavBar from '../components/NewNavbar'
 import University from '../components/University'
+import { SnackbarProvider } from '../components/CommonComponents/SnackBarComponent'
 // import { getLoginToken } from '../common/utilityService'
 
 
@@ -47,54 +48,58 @@ export class RouterRoutes extends Component<any, any> {
         return (
             <Router>
 
-                {/* <NavBar isLoggedIn={isLoggedIn} /> */}
-                <NavBar />
-                {/* <NewNavBar /> */}
-                <Routes>
+                <SnackbarProvider>
+
+                    {/* <NavBar isLoggedIn={isLoggedIn} /> */}
+                    <NavBar />
+                    {/* <NewNavBar /> */}
+                    <Routes>
 
 
-                    <Route path='login' element={<Login />} />
-                    <Route path='register' element={<Signup />} />
-                    <Route element={<LoginGuard />} >
+                        <Route path='login' element={<Login />} />
+                        <Route path='register' element={<Signup />} />
+                        <Route element={<LoginGuard />} >
 
 
-                    </Route>
+                        </Route>
 
 
-                    <Route element={<AuthGuard />} >
+                        <Route element={<AuthGuard />} >
 
 
-                        <Route path={ROUTES_URL.ABOUT.url} element={<About />} />
+                            <Route path={ROUTES_URL.ABOUT.url} element={<About />} />
 
-                        <Route path='/' element={<News key="general" pageSize={this.pageSize} category="general" />} />
+                            <Route path='/' element={<News key="general" pageSize={this.pageSize} category="general" />} />
 
-                        <Route path={ROUTES_URL.BUSINESS.url} element={<News key="business" pageSize={this.pageSize} category="business" />} />
+                            <Route path={ROUTES_URL.BUSINESS.url} element={<News key="business" pageSize={this.pageSize} category="business" />} />
 
-                        <Route path={ROUTES_URL.ENTERTAINMENT.url} element={<News key="entertainment" pageSize={this.pageSize} category="entertainment" />} />
+                            <Route path={ROUTES_URL.ENTERTAINMENT.url} element={<News key="entertainment" pageSize={this.pageSize} category="entertainment" />} />
 
-                        <Route path={ROUTES_URL.GENERAL.url} element={<News key="general" pageSize={this.pageSize} category="general" />} />
+                            <Route path={ROUTES_URL.GENERAL.url} element={<News key="general" pageSize={this.pageSize} category="general" />} />
 
-                        <Route path={ROUTES_URL.HEALTH.url} element={<News key="health" pageSize={this.pageSize} category="health" />} />
+                            <Route path={ROUTES_URL.HEALTH.url} element={<News key="health" pageSize={this.pageSize} category="health" />} />
 
-                        <Route path={ROUTES_URL.SPORTS.url} element={<News key="sports" pageSize={this.pageSize} category="sports" />} />
+                            <Route path={ROUTES_URL.SPORTS.url} element={<News key="sports" pageSize={this.pageSize} category="sports" />} />
 
-                        <Route path={ROUTES_URL.SCIENCE.url} element={<News key="science" pageSize={this.pageSize} category="science" />} />
+                            <Route path={ROUTES_URL.SCIENCE.url} element={<News key="science" pageSize={this.pageSize} category="science" />} />
 
-                        <Route path={ROUTES_URL.TECHNOLOGY.url} element={<News key="technology" pageSize={this.pageSize} category="technology" />} />
+                            <Route path={ROUTES_URL.TECHNOLOGY.url} element={<News key="technology" pageSize={this.pageSize} category="technology" />} />
 
-                        <Route path='learn-formik' element={<FormikLearning />} />
+                            <Route path='learn-formik' element={<FormikLearning />} />
 
-                        <Route path={ROUTES_URL.COUNTRY.url} element={<Country />} />
+                            <Route path={ROUTES_URL.COUNTRY.url} element={<Country />} />
 
-                        <Route path={ROUTES_URL.UNIVERSITY.url} element={<University />} />
+                            <Route path={ROUTES_URL.UNIVERSITY.url} element={<University />} />
 
-                    </Route>
-
-
-                    <Route path='*' element={<NotFound />} />
+                        </Route>
 
 
-                </Routes>
+                        <Route path='*' element={<NotFound />} />
+
+
+                    </Routes>
+
+                </SnackbarProvider>
 
             </Router>
         )

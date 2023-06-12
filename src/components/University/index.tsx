@@ -2,12 +2,12 @@ import React, { useEffect, useState } from 'react'
 // import { DOG_API } from '../../API-Keys/api-keys';
 import { UNIVERSITIES_LIST_API_CALL } from '../../axios/ApiCall';
 import { API_END_POINTS } from '../../API-Keys/api-endpoints';
-import { Box, Button, Card, CardActions, CardContent, CardMedia, Grid, Skeleton, Typography } from '@mui/material';
-import { ErrorMessage, Field, Form, Formik } from 'formik';
+import { Box, Card, CardContent, CardMedia, Container, Grid, Skeleton, Typography } from '@mui/material';
+import { Field, Form, Formik } from 'formik';
 import * as Yup from 'yup';
 import { ValidationOnUniversityForm } from './helper';
 import { intialValues } from './type';
-import TextError from '../CommonComponents/TextError';
+// import TextError from '../CommonComponents/TextError';
 import { Link } from 'react-router-dom';
 
 
@@ -65,124 +65,122 @@ export default function University() {
         setLoader(false)
 
         getMyPostData(values)
-
-
     }
-
-
 
 
     return (
         <>
+            <Box>
+                <Container maxWidth='xl'>
+                    <br /><br />
+                    <h2 style={{ display: 'flex', paddingBottom: '10px', paddingLeft: '6.5%' }}>Enter country to view universities present: </h2>
+                    <div className="container">
+                        <Formik
+                            initialValues={intialValues}
+                            validationSchema={validationSchema}
+                            onSubmit={onSubmit}>
 
-            <br /><br />
-            <h2 style={{ display: 'flex', paddingBottom: '10px', paddingLeft: '16%' }}>Enter country to view universities present: </h2>
-            <div className="container">
-                <Formik
-                    initialValues={intialValues}
-                    validationSchema={validationSchema}
-                    onSubmit={onSubmit}>
+                            <Form>
 
-                    <Form>
+                                {/* <div> */}
+                                <div className="form-floating mb-2" style={{ width: '30%', display: 'flex', paddingBottom: '20px' }}>
+                                    <Field
+                                        type="text"
+                                        className="form-control"
+                                        required
+                                        id='country'
+                                        name='country'
+                                        placeholder="country"
+                                    />
+                                    <label htmlFor="country">Country</label>
 
-                        {/* <div> */}
-                        <div className="form-floating mb-2" style={{ width: '30%', display: 'flex', paddingBottom: '20px' }}>
-                            <Field
-                                type="text"
-                                className="form-control"
-                                required
-                                id='country'
-                                name='country'
-                                placeholder="country"
-                            />
-                            {/* <ErrorMessage name='country' component={TextError} /> */}
-                            <label htmlFor="country">Country</label>
-
-                            <div className='button-save' style={{ padding: '10px' }}>
-                                <button className="btn btn-dark" type='submit'>Submit</button>
-                            </div>
-                        </div>
-                        {/* </div> */}
-
-                    </Form>
-                </Formik>
-            </div>
-
-            {dataCount === 0 ? (
-            <></>
-            ) :(<div>
-                <h1>Total Universities count : {dataCount} </h1>
-            </div>)}
-
-
-
-
-            <div style={{ flexGrow: 1 }}>
-
-                <Grid container spacing={3}>
-                    {!loader ? (
-                        skeleton.map((element: any) => {
-                            return <>
-                                <div style={{ paddingTop: '3%', paddingLeft: '5%', display: 'block' }} >
-                                    <Skeleton variant="rectangular" width={275} height={200} >
-                                    </Skeleton>
-                                    <Skeleton />
-                                    <Skeleton />
+                                    <div className='button-save' style={{ padding: '10px' }}>
+                                        <button className="btn btn-dark" type='submit'>Submit</button>
+                                    </div>
                                 </div>
-                            </>
-                        })
+                                {/* </div> */}
 
-                    ) : (
+                            </Form>
+                        </Formik>
+                    </div>
 
-                        myData.length === 0 ?
-                            <NoDataPresent />
-                            :
-                            (
-                                myData.map((element: any, index) => (
+                    {dataCount === 0 ? (
+                        <></>
+                    ) : (<div>
+                        <h1>Total Universities count : {dataCount} </h1>
+                    </div>)}
 
-                                    <Grid item xs={12} sm={6} md={5} lg={3} key={index}>
-                                        <Card sx={{
-                                            display: 'flex',
-                                            flexDirection: 'column',
-                                            justifyContent: 'space-between',
-                                            margin: '10px',
-                                            maxWidth: 340,
-                                        }}>
-                                            <CardMedia
-                                                sx={{ height: 40, }}
 
-                                            />
-                                            <CardContent>
-                                                <Typography gutterBottom variant="h6" component="h2">
-                                                    Country: {element.country}
-                                                </Typography>
-                                                <Typography gutterBottom variant="h6" component="h2">
-                                                    {element.name}
-                                                </Typography>
-                                                <Typography variant="body2" color="textSecondary" component="p">
-                                                    {/* State: {element.state-province} */}
-                                                </Typography>
-                                                <Typography variant="body2" color="textSecondary" component="p">
-                                                    Web Page: <Link to={element.web_pages[0]} target="_blank">{element.web_pages[0]}</Link>
-                                                </Typography>
-                                                <Typography variant="body2" color="textSecondary" component="p">
-                                                    {/* Population: {element.population} million */}
-                                                </Typography>
-                                                <Typography variant="body2" color="textSecondary" component="p">
-                                                    {/* Region: {element.region} */}
-                                                </Typography>
-                                                {/* <button onClick={handleRandomClick}>Random Country</button> */}
-                                            </CardContent>
-                                        </Card>
-                                    </Grid>
-                                ))
+
+
+                    <div style={{ flexGrow: 1 }}>
+
+                        <Grid container spacing={3}>
+                            {!loader ? (
+                                skeleton.map((element: any) => {
+                                    return <>
+                                        <div style={{ paddingTop: '3%', paddingLeft: '5%', display: 'block' }} >
+                                            <Skeleton variant="rectangular" width={275} height={200} >
+                                            </Skeleton>
+                                            <Skeleton />
+                                            <Skeleton />
+                                        </div>
+                                    </>
+                                })
+
+                            ) : (
+
+                                myData.length === 0 ?
+                                    <NoDataPresent />
+                                    :
+                                    (
+                                        myData.map((element: any, index) => (
+
+                                            <Grid item xs={12} sm={6} md={5} lg={3} key={index}>
+                                                <Card sx={{
+                                                    display: 'flex',
+                                                    flexDirection: 'column',
+                                                    justifyContent: 'space-between',
+                                                    margin: '10px',
+                                                    maxWidth: 340,
+                                                }}>
+                                                    <CardMedia
+                                                        sx={{ height: 40, }}
+
+                                                    />
+                                                    <CardContent>
+                                                        <Typography gutterBottom variant="h6" component="h2">
+                                                            Country: {element.country}
+                                                        </Typography>
+                                                        <Typography gutterBottom variant="h6" component="h2">
+                                                            {element.name}
+                                                        </Typography>
+                                                        <Typography variant="body2" color="textSecondary" component="p">
+                                                            {/* State: {element.state-province} */}
+                                                        </Typography>
+                                                        <Typography variant="body2" color="textSecondary" component="p">
+                                                            Web Page: <Link to={element.web_pages[0]} target="_blank">{element.web_pages[0]}</Link>
+                                                        </Typography>
+                                                        <Typography variant="body2" color="textSecondary" component="p">
+                                                            {/* Population: {element.population} million */}
+                                                        </Typography>
+                                                        <Typography variant="body2" color="textSecondary" component="p">
+                                                            {/* Region: {element.region} */}
+                                                        </Typography>
+                                                        {/* <button onClick={handleRandomClick}>Random Country</button> */}
+                                                    </CardContent>
+                                                </Card>
+                                            </Grid>
+                                        ))
+                                    )
+
+
                             )
-
-
-                    )
-                    }
-                </Grid>
-            </div>
+                            }
+                        </Grid>
+                    </div>
+                </Container>
+            </Box>
         </>
     )
 }

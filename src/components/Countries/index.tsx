@@ -1,4 +1,4 @@
-import { Card, CardMedia, CardContent, Typography, Grid } from '@mui/material';
+import { Card, CardMedia, CardContent, Typography, Grid, Box, Container } from '@mui/material';
 import React, { useEffect, useState } from 'react';
 import Skeleton from '@mui/material/Skeleton';
 import { environment } from '../../environment/development';
@@ -102,7 +102,7 @@ const CountryList = () => {
           skeleton.map((element: any) => {
             return <>
               <div style={{ paddingTop: '3%', paddingLeft: '5%', display: 'block' }} >
-                <Skeleton variant="rectangular" width={275} height={200} >
+                <Skeleton variant="rectangular" width={250} height={200} >
                 </Skeleton>
                 <Skeleton />
                 <Skeleton />
@@ -126,9 +126,13 @@ const CountryList = () => {
 export default function About() {
 
   return (
-    <div>
-      <CountryList />
-    </div>
+    <>
+      <Box>
+        <Container maxWidth='xl'>
+          <CountryList />
+        </Container>
+      </Box>
+    </>
   );
 }
 

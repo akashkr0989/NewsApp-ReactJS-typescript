@@ -1,21 +1,45 @@
-import React, { Component, useState } from 'react'
+import React, { Component, useContext, useState } from 'react'
 import { Route, Link, useNavigate } from "react-router-dom";
 import { clearLocalStorage, getLoginToken } from '../common/utilityService'
 import { red } from '@mui/material/colors';
+import { LOGOUT } from '../axios/ApiCall';
+import Snackbar from '@mui/material/Snackbar';
+import Alert from '@mui/material/Alert';
+import  { SnackbarContext } from './CommonComponents/SnackBarComponent';
+
 
 export default function NavBar(props: any) {
 
-    let isLoggedIn: boolean = false
+    // const [openSnackbar, setOpenSnackbar] = useState(false);
+    // const [apiResponse, setApiResponse] = useState('');
 
-    // const [isLoggedIn, setisLoggedIn] = useState(false) 
-     
+    const { showSnackbar } = useContext(SnackbarContext);
+
+    let isLoggedIn: boolean = false;
+
     const navigate = useNavigate();
 
-    const logoutHandle = () => {
-        clearLocalStorage();
-        navigate('/login')
-        //    return  <Navigate to={'login'} />
+    const logoutHandle = async () => {
+
+        try {
+            const response: any = await LOGOUT.get('logout');
+            // setApiResponse(response.data.data.message);
+            // setOpenSnackbar(true);
+            showSnackbar(response.data.data.message);
+            clearLocalStorage();
+            navigate('/login');
+
+        } catch (error: any) {
+            showSnackbar(error.data.data.message);
+            // setApiResponse(error.data.data.message);
+            // setOpenSnackbar(true);
+        }
+
     }
+
+    // const handleCloseSnackbar = () => {
+    //     setOpenSnackbar(false);
+    // };
 
     if (getLoginToken()) {
         // setisLoggedIn(true);
@@ -67,7 +91,7 @@ export default function NavBar(props: any) {
                         </div>
                         <div>
                             {isLoggedIn ?
-                                <button type="button" onClick={logoutHandle} className="btn btn-light cursor-pointer">Log Out</button>
+                                <button type="button" onClick={logoutHandle} className="btn btn-light cursor-pointer">Logout</button>
                                 :
                                 null
 
@@ -76,6 +100,12 @@ export default function NavBar(props: any) {
                     </div>
                 </nav>
             </div>
+
+            {/* Snackbar component */}
+
+            {/* <SnackBarComponent open={openSnackbar} apiResponse={apiResponse}></SnackBarComponent> */}
+
+
         </>
     )
 }
